@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <title>个人存款计算器</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function calc(){
+            //1. 取输入的值
+            var money = $("#money").val();
+            var reg = /^[0-9]{1,6}$/
+            if (!reg.test(money)){
+                $("#money").val("必须\输入数字格式金额！").css("color","red");
+                return;
+            }
+
+            var monNum = parseInt(money);
+            var balance = 0;
+            var totalNum = 0;
+            //2. 计算
+            var year = $("#year option:selected").text();
+            if (year == "一年") {
+                balance = monNum * 0.0175 *1;
+                totalNum = balance + monNum;
+            }
+            if (year == "二年") {
+                balance = monNum*0.0225 *2;
+                totalNum = balance + monNum;
+            }
+            if (year == "三年") {
+                balance = monNum*0.0275 *3;
+                totalNum = balance + monNum;
+            }
+            if (year == "五年") {
+                balance = monNum*0.0275 *5;
+                totalNum = balance + monNum;
+            }
+            //3. 显示出来
+            $("#ban").val(balance);
+            $("#total").val(totalNum);
+        }
+        function clear11(){
+            $("#money").val("").css("color","");
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="text-center">
+        <img src="image/cmb.png" />
+    </div>
+    <div class="text-center">
+        <table class="table table-bordered">
+            <tr class="bg-primary">
+                <td colspan="2">个人存款计算器</td>
+            </tr>
+            <tr>
+                <td>存款金额</td>
+                <td>
+                    <input onfocus="clear11()" class="form-control" type="text" id="money">
+                </td>
+            </tr>
+            <tr>
+                <td>存款期限</td>
+                <td>
+                    <select class="form-control" id="year">
+                        <option>一年</option>
+                        <option>二年</option>
+                        <option>三年</option>
+                        <option>五年</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>所得利息</td>
+                <td>
+                    <input class="form-control" readonly="readonly" type="text" id="ban">
+                </td>
+            </tr>
+            <tr>
+                <td>本息合计</td>
+                <td>
+                    <input class="form-control" readonly="readonly" type="text" id="total">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button onclick="calc()" class="btn btn-primary btn-block">开始计算</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="text-center">
+        开发者： 2020521 田贺文
+    </div>
+</div>
+</body>
+</html>
